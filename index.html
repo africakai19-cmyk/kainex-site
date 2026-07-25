@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAINEX — Smart books. African built.</title>
+<meta name="description" content="Bookkeeping, tax, payroll and compliance for South African SMEs — handled by real Africakai accountants, sped up by smart software.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#2C2826;
+    --charcoal-soft:rgba(44,40,38,.66);
+    --charcoal-faint:rgba(44,40,38,.38);
+    --flame:#E8470A;
+    --flame-dark:#C13A08;
+    --cream:#F7F5F2;
+    --sand:#EAE3D7;
+    --sand-line:#DCD3C3;
+    --balance:#4A7856;
+    --balance-bg:#E7EFE6;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --max: 1120px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--body);
+    background:var(--cream);
+    color:var(--charcoal);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img,svg{display:block; max-width:100%;}
+  ul{list-style:none;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+  h1,h2,h3{font-family:var(--display); font-weight:600; letter-spacing:-0.01em; line-height:1.08;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--flame-dark); display:flex; align-items:center; gap:8px; margin-bottom:14px;
+  }
+  .eyebrow::before{content:""; width:16px; height:1px; background:var(--flame-dark); display:inline-block;}
+  .nums{font-family:var(--mono); font-variant-numeric:tabular-nums;}
+  button, .btn{font-family:var(--body); font-weight:600; cursor:pointer; border:none;}
+  :focus-visible{outline:2px solid var(--flame); outline-offset:3px;}
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(247,245,242,.88); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--sand-line);
+  }
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:18px 28px; max-width:var(--max); margin:0 auto;}
+  .logo{font-family:var(--display); font-weight:700; font-size:20px; letter-spacing:-0.01em; display:flex; align-items:baseline; gap:2px;}
+  .logo .kai{color:var(--flame);}
+  .nav-links{display:flex; gap:32px; font-size:14.5px; font-weight:500;}
+  .nav-links a{text-decoration:none; color:var(--charcoal-soft); transition:color .15s;}
+  .nav-links a:hover{color:var(--charcoal);}
+  .nav-cta{display:flex; align-items:center; gap:20px;}
+  .nav-cta a.login{font-size:14.5px; font-weight:600; text-decoration:none;}
+  .btn-primary{
+    background:var(--flame); color:#fff; padding:10px 20px; border-radius:3px; font-size:14.5px;
+    transition:background .15s, transform .15s; text-decoration:none; display:inline-block;
+  }
+  .btn-primary:hover{background:var(--flame-dark); transform:translateY(-1px);}
+  .btn-ghost{
+    background:transparent; color:var(--charcoal); padding:10px 20px; border-radius:3px; font-size:14.5px;
+    border:1px solid var(--sand-line); transition:border-color .15s, background .15s; text-decoration:none; display:inline-block;
+  }
+  .btn-ghost:hover{border-color:var(--charcoal-faint); background:var(--sand);}
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:88px 0 64px;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center;}
+  .hero h1{font-size:clamp(34px,4.6vw,54px); margin-bottom:22px;}
+  .hero h1 .accent{color:var(--flame);}
+  .hero p.lede{font-size:18px; color:var(--charcoal-soft); max-width:46ch; margin-bottom:32px;}
+  .hero-actions{display:flex; align-items:center; gap:18px; margin-bottom:28px; flex-wrap:wrap;}
+  .hero-actions .btn-primary{padding:13px 26px; font-size:15px;}
+  .hero-note{font-size:13px; color:var(--charcoal-faint);}
+  .trust-strip{
+    display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:36px; padding-top:28px;
+    border-top:1px solid var(--sand-line);
+  }
+  .trust-item{display:flex; align-items:center; gap:7px; font-size:12.5px; font-family:var(--mono); color:var(--charcoal-soft);}
+  .trust-item .dot{width:5px; height:5px; border-radius:50%; background:var(--balance);}
+
+  /* ---------- Ledger widget (signature element) ---------- */
+  .ledger-card{
+    background:#fff; border:1px solid var(--sand-line); border-radius:6px;
+    box-shadow:0 20px 50px -30px rgba(44,40,38,.35);
+    overflow:hidden;
+  }
+  .ledger-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 20px; border-bottom:1px solid var(--sand-line); background:var(--sand);
+  }
+  .ledger-head .label{font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--charcoal-soft);}
+  .ledger-status{
+    display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px; font-weight:500;
+    color:var(--charcoal-faint); transition:color .4s;
+  }
+  .ledger-status .ring{
+    width:8px; height:8px; border-radius:50%; border:1.5px solid var(--charcoal-faint); transition:.4s;
+  }
+  .ledger-status.balanced{color:var(--balance);}
+  .ledger-status.balanced .ring{background:var(--balance); border-color:var(--balance);}
+  .ledger-body{display:grid; grid-template-columns:1fr 1fr;}
+  .ledger-col{padding:20px;}
+  .ledger-col + .ledger-col{border-left:1px solid var(--sand-line);}
+  .ledger-col h4{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--charcoal-faint); margin-bottom:14px;}
+  .ledger-row{display:flex; justify-content:space-between; gap:12px; font-size:13.5px; padding:7px 0; border-bottom:1px dashed var(--sand-line);}
+  .ledger-row .amt{font-family:var(--mono); font-variant-numeric:tabular-nums;}
+  .ledger-total{
+    display:flex; justify-content:space-between; padding:14px 20px; font-family:var(--mono);
+    font-size:14px; font-weight:600; background:var(--cream); border-top:1px solid var(--sand-line);
+  }
+  .ledger-total.credit-total{border-left:1px solid var(--sand-line);}
+  .ledger-totals-row{display:grid; grid-template-columns:1fr 1fr;}
+  .ledger-diff{
+    text-align:center; padding:12px; font-family:var(--mono); font-size:12.5px;
+    background:var(--balance-bg); color:var(--balance); border-top:1px solid var(--sand-line);
+  }
+
+  /* ---------- Section shell ---------- */
+  section{padding:84px 0;}
+  section.alt{background:#fff; border-top:1px solid var(--sand-line); border-bottom:1px solid var(--sand-line);}
+  .section-head{max-width:640px; margin-bottom:52px;}
+  .section-head h2{font-size:clamp(26px,3vw,34px); margin-bottom:14px;}
+  .section-head p{color:var(--charcoal-soft); font-size:16px;}
+
+  /* ---------- Why choose (official brand bullets) ---------- */
+  .why-strip{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:24px;
+    background:var(--charcoal); border-radius:8px; padding:36px 40px;
+  }
+  .why-item{display:flex; gap:12px; align-items:flex-start;}
+  .why-item .check{
+    flex:none; width:22px; height:22px; border-radius:50%; background:var(--flame);
+    color:#fff; font-size:12px; display:flex; align-items:center; justify-content:center; margin-top:2px;
+  }
+  .why-item p{color:rgba(247,245,242,.88); font-size:14px; line-height:1.45;}
+  @media (max-width:860px){ .why-strip{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .why-strip{grid-template-columns:1fr;} }
+
+  /* ---------- Features ---------- */
+  .feature-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--sand-line); border:1px solid var(--sand-line);}
+  .feature{background:var(--cream); padding:30px 32px;}
+  .feature h3{font-size:18px; margin-bottom:10px;}
+  .feature p{color:var(--charcoal-soft); font-size:14.5px;}
+  .feature .tag{font-family:var(--mono); font-size:11px; color:var(--flame-dark); letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; display:block;}
+
+  /* ---------- How it works (legit sequence) ---------- */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:0; position:relative;}
+  .step{padding:0 28px 0 0; position:relative;}
+  .step-num{font-family:var(--mono); font-size:13px; color:var(--flame); margin-bottom:16px;}
+  .step h3{font-size:19px; margin-bottom:10px;}
+  .step p{color:var(--charcoal-soft); font-size:14.5px;}
+  @media (max-width:760px){ .steps{grid-template-columns:1fr; gap:36px;} .feature-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Pricing (card grid — packages vary a lot in bullet count) ---------- */
+  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .price-card{
+    background:#fff; border:1px solid var(--sand-line); border-radius:8px; padding:26px;
+    display:flex; flex-direction:column; border-top:3px solid var(--sand-line);
+  }
+  .price-card.featured{border-top-color:var(--flame);}
+  .price-name{font-weight:600; font-size:16px; margin-bottom:4px;}
+  .price-name .sub{display:block; font-size:12px; color:var(--charcoal-faint); font-weight:400; margin-top:5px; line-height:1.4;}
+  .price-amount{font-family:var(--mono); font-size:22px; font-weight:600; margin:14px 0 16px; padding-top:14px; border-top:1px dashed var(--sand-line);}
+  .price-amount .per{display:block; font-size:11.5px; font-weight:400; color:var(--charcoal-faint); margin-top:3px;}
+  .price-list{font-size:13px; color:var(--charcoal-soft); flex:1;}
+  .price-list .plus{font-size:11.5px; color:var(--charcoal-faint); margin:10px 0 6px; font-style:italic; padding-top:10px; border-top:1px dashed var(--sand-line);}
+  .price-list li{position:relative; padding-left:14px; margin-bottom:6px; line-height:1.4;}
+  .price-list li::before{content:"–"; position:absolute; left:0; color:var(--charcoal-faint);}
+  .price-cta{
+    margin-top:18px; font-size:13px; font-weight:600; text-decoration:none; color:var(--flame-dark);
+    border:1px solid var(--sand-line); border-radius:4px; padding:10px; text-align:center; transition:.15s;
+  }
+  .price-cta:hover{color:#fff; background:var(--flame); border-color:var(--flame);}
+  .price-note{
+    margin-top:22px; font-size:13px; color:var(--charcoal-soft); background:var(--sand);
+    border:1px solid var(--sand-line); border-radius:6px; padding:14px 18px;
+  }
+  @media (max-width:920px){ .price-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:620px){ .price-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Compliance ---------- */
+  .comply-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .comply-card{border:1px solid var(--sand-line); border-radius:6px; padding:22px; background:var(--cream);}
+  .comply-card .mono{font-family:var(--mono); font-size:12px; color:var(--flame-dark); letter-spacing:.05em; margin-bottom:10px; display:block;}
+  .comply-card p{font-size:13.5px; color:var(--charcoal-soft);}
+  @media (max-width:860px){ .comply-grid{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- CTA band ---------- */
+  .cta-band{
+    background:var(--charcoal); color:var(--cream); border-radius:8px; padding:56px 48px;
+    display:flex; justify-content:space-between; align-items:center; gap:32px; flex-wrap:wrap;
+  }
+  .cta-band h2{font-size:28px; color:#fff; max-width:26ch;}
+  .cta-band p{color:rgba(247,245,242,.65); margin-top:8px; font-size:14.5px;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:56px 0 40px; border-top:1px solid var(--sand-line);}
+  .foot-grid{display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap; margin-bottom:40px;}
+  .foot-brand .logo{margin-bottom:12px;}
+  .foot-brand p{font-size:13.5px; color:var(--charcoal-soft); max-width:34ch; margin-bottom:6px;}
+  .foot-cols{display:flex; gap:56px; flex-wrap:wrap;}
+  .foot-col h5{font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--charcoal-faint); margin-bottom:14px;}
+  .foot-col a, .foot-col span{display:block; font-size:13.5px; color:var(--charcoal-soft); text-decoration:none; margin-bottom:10px;}
+  .foot-col a:hover{color:var(--charcoal);}
+  .foot-bottom{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:24px;
+    border-top:1px solid var(--sand-line); font-size:12.5px; color:var(--charcoal-faint); font-family:var(--mono);
+  }
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-grid .ledger-card{order:-1;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="kai">KAI</span>NEX</div>
+    <nav class="nav-links">
+      <a href="#features">Services</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Packages</a>
+      <a href="#compliance">Security</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="login" href="https://kainex.vercel.app/login">Log in</a>
+      <a class="btn-primary" href="mailto:admin@africakai.co.za?subject=KAINEX%20package%20enquiry">Get a quote</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Africakai (Pty) Ltd — Nzhelele &amp; Polokwane</div>
+      <h1>The books balance.<br><span class="accent">Every time.</span></h1>
+      <p class="lede">Your bookkeeping, tax and compliance handled by real Africakai accountants — with software that reads your statements and drafts the categorisation, so nothing sits in a queue.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="mailto:admin@africakai.co.za?subject=KAINEX%20package%20enquiry">Get a quote</a>
+        <a class="btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="hero-note">Two offices, real accountants — reach us at admin@africakai.co.za.</p>
+      <div class="trust-strip">
+        <div class="trust-item"><span class="dot"></span>POPIA compliant</div>
+        <div class="trust-item"><span class="dot"></span>ISRS 4410 compilations</div>
+        <div class="trust-item"><span class="dot"></span>Hosted in Cape Town</div>
+        <div class="trust-item"><span class="dot"></span>SARS-ready VAT201 &amp; EMP201</div>
+      </div>
+    </div>
+
+    <div class="ledger-card">
+      <div class="ledger-head">
+        <span class="label">Trial balance — live</span>
+        <span class="ledger-status" id="ledgerStatus"><span class="ring"></span><span id="ledgerStatusText">Posting…</span></span>
+      </div>
+      <div class="ledger-body">
+        <div class="ledger-col">
+          <h4>Debit</h4>
+          <div class="ledger-row"><span>Bank account</span><span class="amt" data-target="48210">R0.00</span></div>
+          <div class="ledger-row"><span>Debtors</span><span class="amt" data-target="12400">R0.00</span></div>
+          <div class="ledger-row"><span>Operating expenses</span><span class="amt" data-target="9860">R0.00</span></div>
+        </div>
+        <div class="ledger-col">
+          <h4>Credit</h4>
+          <div class="ledger-row"><span>Revenue</span><span class="amt" data-target="58900">R0.00</span></div>
+          <div class="ledger-row"><span>VAT output</span><span class="amt" data-target="7470">R0.00</span></div>
+          <div class="ledger-row"><span>Owner's equity</span><span class="amt" data-target="4100">R0.00</span></div>
+        </div>
+      </div>
+      <div class="ledger-totals-row">
+        <div class="ledger-total"><span>Total</span><span class="amt" id="debitTotal">R0.00</span></div>
+        <div class="ledger-total credit-total"><span>Total</span><span class="amt" id="creditTotal">R0.00</span></div>
+      </div>
+      <div class="ledger-diff" id="ledgerDiff">Difference: R0.00</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="why-strip">
+      <div class="why-item"><span class="check">✓</span><p>Tailored solutions for businesses of all sizes</p></div>
+      <div class="why-item"><span class="check">✓</span><p>Expert guidance on tax, payroll, and compliance</p></div>
+      <div class="why-item"><span class="check">✓</span><p>Scalable packages to grow with your business</p></div>
+      <div class="why-item"><span class="check">✓</span><p>Dedicated support to help you make informed financial decisions</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Bookkeeping &amp; accounting services</div>
+      <h2>Real accountants, backed by software that never sleeps</h2>
+      <p>Every package is delivered by a qualified Africakai accountant. Software handles the reading and drafting; a person checks it before it reaches SARS or your financials.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <span class="tag">Bookkeeping</span>
+        <h3>Monthly bookkeeping</h3>
+        <p>Bank statements and source documents processed monthly and reconciled by your assigned accountant.</p>
+      </div>
+      <div class="feature">
+        <span class="tag">Tax</span>
+        <h3>Provisional to annual tax</h3>
+        <p>Provisional tax, annual income tax returns, and full annual financial statements — prepared and filed for you.</p>
+      </div>
+      <div class="feature">
+        <span class="tag">Payroll</span>
+        <h3>Payroll and statutory returns</h3>
+        <p>PAYE, UIF and SDL, monthly UI19 declarations, and bi-annual EMP501 reconciliation, run against SARS tables.</p>
+      </div>
+      <div class="feature">
+        <span class="tag">Compliance</span>
+        <h3>CIPC and B-BBEE compliance</h3>
+        <p>Annual returns, beneficial ownership submissions, and B-BBEE support, tracked so nothing is missed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>Three steps from statement to signed-off books</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01 / Send</div>
+        <h3>Send your documents</h3>
+        <p>Upload a bank statement through the portal, or send it straight to your accountant.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02 / Check</div>
+        <h3>We process and confirm it</h3>
+        <p>Software drafts the categorisation from your statement; your accountant reviews and confirms every line.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03 / Balance</div>
+        <h3>Your books stay current</h3>
+        <p>Confirmed transactions post as balanced, double-entry journal lines — books your accountant can sign off on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Packages</div>
+      <h2>Priced by turnover, built to grow with you</h2>
+      <p>Every package below is delivered by an Africakai accountant. Pick the one closest to your turnover — we will confirm the exact fit before anything is signed.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-name">Small Business Essentials<span class="sub">Turnover ≤ R500,000/yr — startups &amp; micro-businesses</span></div>
+        <div class="price-amount">R1,200<span class="per">per month</span></div>
+        <ul class="price-list">
+          <li>Monthly bookkeeping</li>
+          <li>Provisional tax return submissions</li>
+          <li>Annual income tax return submission</li>
+          <li>Annual financial statements</li>
+          <li>Business advisory</li>
+        </ul>
+        <a class="price-cta" href="mailto:admin@africakai.co.za?subject=KAINEX%20-%20Small%20Business%20Essentials%20enquiry">Get a quote →</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-name">Growth Business<span class="sub">Turnover ≤ R1 million/yr — VAT &amp; payroll compliance</span></div>
+        <div class="price-amount">R2,500<span class="per">per month</span></div>
+        <ul class="price-list">
+          <li>VAT returns submissions</li>
+          <li>Monthly payroll processing</li>
+          <li>PAYE, UIF and SDL returns</li>
+          <li>Monthly UI19 declaration</li>
+          <li>Bi-annual EMP501 reconciliation</li>
+          <li>Stats SA returns submissions</li>
+          <li class="plus">Everything in Essentials too</li>
+        </ul>
+        <a class="price-cta" href="mailto:admin@africakai.co.za?subject=KAINEX%20-%20Growth%20Business%20enquiry">Get a quote →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">SME Full Compliance<span class="sub">Turnover ≤ R5 million/yr — tax planning &amp; technical support</span></div>
+        <div class="price-amount">R5,500<span class="per">per month</span></div>
+        <ul class="price-list">
+          <li>Accounting, tax &amp; technical query support</li>
+          <li>Tax planning &amp; optimisation</li>
+          <li>CIPC annual returns filing</li>
+          <li>B-BBEE compliance support</li>
+          <li>Quarterly financial reports</li>
+          <li>Annual beneficial ownership submission to CIPC</li>
+          <li class="plus">Everything in Growth too</li>
+        </ul>
+        <a class="price-cta" href="mailto:admin@africakai.co.za?subject=KAINEX%20-%20SME%20Full%20Compliance%20enquiry">Get a quote →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">Corporate Compliance<span class="sub">Turnover ≤ R10 million/yr — larger SMEs</span></div>
+        <div class="price-amount">R10,000<span class="per">per month</span></div>
+        <ul class="price-list">
+          <li>Dedicated account manager</li>
+          <li>Enhanced financial reporting, quarterly &amp; on-demand</li>
+          <li class="plus">Everything in Full Compliance too</li>
+        </ul>
+        <a class="price-cta" href="mailto:admin@africakai.co.za?subject=KAINEX%20-%20Corporate%20Compliance%20enquiry">Get a quote →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">Enterprise Management<span class="sub">Turnover ≤ R20 million/yr — project-based operations</span></div>
+        <div class="price-amount">R18,000<span class="per">per month</span></div>
+        <ul class="price-list">
+          <li>Project risk analysis &amp; financial forecasting</li>
+          <li>Custom financial reporting based on business needs</li>
+          <li class="plus">Everything in Corporate too</li>
+        </ul>
+        <a class="price-cta" href="mailto:admin@africakai.co.za?subject=KAINEX%20-%20Enterprise%20Management%20enquiry">Get a quote →</a>
+      </div>
+    </div>
+    <p class="price-note">Prices above are what most businesses in each turnover band pay. A few things can adjust the final quote — multiple bank accounts, VAT vendor reconciliation, group company structures, or an outstanding prior year. We confirm the exact fee before anything is signed, so there are no surprises after onboarding.</p>
+  </div>
+</section>
+
+<section class="alt" id="compliance">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Security &amp; compliance</div>
+      <h2>Your financial records aren't a demo</h2>
+      <p>KAINEX is a processing tool under POPIA; Africakai is the responsible party. Documents and access are treated accordingly.</p>
+    </div>
+    <div class="comply-grid">
+      <div class="comply-card">
+        <span class="mono">01</span>
+        <p>Bank statements and tax documents are stored in private buckets, served only via short-lived signed URLs.</p>
+      </div>
+      <div class="comply-card">
+        <span class="mono">02</span>
+        <p>Every record change keeps an audit trail — nothing is hard-deleted from a client's books.</p>
+      </div>
+      <div class="comply-card">
+        <span class="mono">03</span>
+        <p>Compilations follow ISRS 4410 (Revised), with a checklist an accountant must complete before sign-off.</p>
+      </div>
+      <div class="comply-card">
+        <span class="mono">04</span>
+        <p>Consent is captured at registration, and data breaches are reported within 72 hours, per POPIA.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2>Tell us about your business, we will tell you which package fits.</h2>
+        <p>Email admin@africakai.co.za, or call in at our Nzhelele or Polokwane office.</p>
+      </div>
+      <a class="btn-primary" href="mailto:admin@africakai.co.za?subject=KAINEX%20package%20enquiry" style="padding:14px 28px; font-size:15px;">Get a quote</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo"><span class="kai">KAI</span>NEX</div>
+        <p>Smart books. African built. A product of Africakai (Pty) Ltd.</p>
+        <p>Nzhelele &amp; Polokwane offices</p>
+        <p>admin@africakai.co.za</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h5>Services</h5>
+          <a href="#features">Bookkeeping &amp; accounting</a>
+          <a href="#pricing">Packages</a>
+          <a href="#compliance">Security</a>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5>
+          <a href="https://www.africakai.co.za">Africakai</a>
+          <a href="/terms">Terms of Service</a>
+          <a href="/privacy">Privacy Policy</a>
+        </div>
+        <div class="foot-col">
+          <h5>Account</h5>
+          <a href="https://kainex.vercel.app/login">Log in</a>
+          <a href="https://kainex.vercel.app/register">Create an account</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Africakai (Pty) Ltd</span>
+      <span>Made in South Africa</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var amounts = document.querySelectorAll('.amt[data-target]');
+  var debitTotal = 0, creditTotal = 0;
+  var debitEls = document.querySelectorAll('.ledger-col:first-child .amt');
+  var creditEls = document.querySelectorAll('.ledger-col:last-child .amt');
+  debitEls.forEach(function(el){ debitTotal += parseInt(el.dataset.target, 10); });
+  creditEls.forEach(function(el){ creditTotal += parseInt(el.dataset.target, 10); });
+
+  function fmt(n){
+    return 'R' + n.toLocaleString('en-ZA', {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var duration = reduced ? 1 : 1400;
+  var start = null;
+
+  function ease(t){ return 1 - Math.pow(1 - t, 3); }
+
+  function step(ts){
+    if(!start) start = ts;
+    var progress = Math.min((ts - start) / duration, 1);
+    var e = ease(progress);
+
+    amounts.forEach(function(el){
+      var target = parseInt(el.dataset.target, 10);
+      el.textContent = fmt(Math.round(target * e));
+    });
+    document.getElementById('debitTotal').textContent = fmt(Math.round(debitTotal * e));
+    document.getElementById('creditTotal').textContent = fmt(Math.round(creditTotal * e));
+
+    if(progress < 1){
+      requestAnimationFrame(step);
+    } else {
+      document.getElementById('ledgerStatus').classList.add('balanced');
+      document.getElementById('ledgerStatusText').textContent = 'Balanced';
+      document.getElementById('ledgerDiff').textContent = 'Difference: R0.00';
+    }
+  }
+  requestAnimationFrame(step);
+})();
+</script>
+
+</body>
+</html>
