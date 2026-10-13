@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.kainex.co.za/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -32,7 +32,7 @@
   </url>
   <url>
     <loc>https://www.kainex.co.za/blog</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
@@ -48,6 +48,21 @@
   <url>
     <loc>https://www.kainex.co.za/blog/bookkeeping-cost-south-africa</loc>
     <lastmod>2026-10-12</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.kainex.co.za/blog/provisional-tax-south-africa-guide</loc>
+    <lastmod>2026-10-13</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.kainex.co.za/blog/cipc-annual-return-south-africa</loc>
+    <lastmod>2026-10-13</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.kainex.co.za/blog/monthly-bookkeeping-checklist</loc>
+    <lastmod>2026-10-13</lastmod>
     <priority>0.6</priority>
   </url>
 </urlset>
